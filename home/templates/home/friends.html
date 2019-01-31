@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="col-md-4">
+  <h2 style="color:Black;">Other People</h2>
+  {% for user in users %}
+    {% if user not in friends %}
+      <a href="{% url 'accounts:view_profile_with_pk' pk=user.pk %}">
+        <h3 style="color:Black;">{{ user.username }}</h3>
+      </a>
+      {% endif %}
+      {% if not user in friends %}
+      <a href="{% url 'home:change_friend' operation='add' pk=user.pk %}">
+        <button type="button" class="btn btn-success" ">Add Friend</button>
+      </a>
+      {% endif %}
+  {% endfor %}
+  <br>
+  <br>
+  <h2 style="color:Black;">Friends</h2>
+  {% for friend in friends %}
+      <a href="{% url 'accounts:view_profile_with_pk' pk=friend.pk %}">
+        <h3 style="color:Black;">{{ friend.username }}</h3>
+      </a>
+      <a href="{% url 'home:change_friend' operation='remove' pk=friend.pk %}">
+        <button type="button" class="btn btn-danger" ">Remove Friend</button>
+      </a>
+
+  {% endfor %}
+</div>
+{% endblock %}
